@@ -1,0 +1,65 @@
+body{ background-color:gray; }
+
+#svgContainer {
+    z-index: 10;
+    position:absolute;
+    /*background-color:silver;*/
+    opacity: 1;
+}
+
+div{
+    opacity: 1;
+    /*float:left;*/
+}
+path {
+    fill:   none;
+    stroke: #000;
+    stroke-width: 0.2em;
+}
+#outer{
+    margin:0 auto;
+    width: 1000%; /* TODO not good. Maybe better way to avoid div wrap.  */
+}
+
+
+
+.person {
+    background-color: teal;
+    width: 8em;
+    height: 3em;
+    float:left;
+    padding: 1em;
+}
+.partner {
+    background-color: greenyellow;
+    width: 21em;
+    height: 5em;
+    padding:1em;
+    margin-top: 5em;
+    margin-left:auto;
+    margin-right:auto;
+}
+.single {
+    background-color: greenyellow;
+    width: 10em;
+    height: 5em;
+    padding:1em;
+    margin-top: 5em;
+    float:left;
+}
+.family {
+    /*background-color: antiquewhite;*/
+    height:auto;
+    width:auto;
+    float:left;
+    padding: 0 1em;
+}
+/* husband */
+.partner > .person {
+    background-color: lightskyblue;
+}
+/* wife */
+.partner > .person + .person {
+    background-color: pink;
+    margin-left:1em;
+}
