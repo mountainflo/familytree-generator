@@ -40,10 +40,10 @@ function myFunction() {
 
     document.getElementById("outer").appendChild(family);
 
-    //TODO creates html-path-element, but it is not visible
-    // var path = document.createElement("PATH");
-    // path.id = "path1";
-    // document.getElementById("svg1").appendChild(path);
+    var path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.id = "path1";
+    document.getElementById("svg1").appendChild(path);
+
 }
 
 
