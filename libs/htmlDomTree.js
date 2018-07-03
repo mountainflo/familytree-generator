@@ -1,3 +1,14 @@
+function generateTreeFromJSON() {
+
+    var obj = JSON.parse(jsonTreeData);
+    alert(obj['family'].husband.dateOfBirth);
+
+
+    //TODO go through JSON and create html objects
+
+
+}
+
 function myFunction() {
 
     var i = 0;
@@ -49,4 +60,5 @@ function myFunction() {
 
 $(document).ready(function () {
     myFunction();
+    generateTreeFromJSON();
 });
