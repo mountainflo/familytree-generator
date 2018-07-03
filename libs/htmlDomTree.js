@@ -1,13 +1,38 @@
 function generateTreeFromJSON() {
 
     var obj = JSON.parse(jsonTreeData);
-    alert(obj['family'].husband.dateOfBirth);
+    //alert(obj['family'].husband.dateOfBirth);
 
 
     //TODO go through JSON and create html objects
 
+    parseFamily(obj['family'])
+
 
 }
+
+
+function parseFamily(family) {
+    var husband = family['husband'];
+    var wife = family['wife'];
+    var married = family['married'];
+    var children = family['children'];
+
+    for (var childs in children) {
+
+        if (children[childs].hasOwnProperty('family')) {
+            parseFamily(children[childs]['family'])
+        } else {
+            children[childs]['name'];
+            children[childs]['surname'];
+            children[childs]['dateOfBirth'];
+        }
+
+    }
+}
+
+
+
 
 function myFunction() {
 
