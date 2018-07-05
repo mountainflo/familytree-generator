@@ -31,28 +31,16 @@ function generateTreeFromJSON() {
 //TODO give error messages if json is not correct
 function parseFamily(familyJSON, pathInputId) {
 
-    var familyDOM = document.createElement("DIV");
-    familyDOM.className = "family";
-    familyDOM.id = (divObjectId++).toString();
+    var familyDOM = createDiv("family", divObjectId++);
 
     var pathOutputId = divObjectId++;
-
-    var partnerObj = document.createElement("DIV");
-    partnerObj.className = "partner";
-    partnerObj.id = (pathOutputId).toString();
+    var partnerObj = createDiv("partner", pathOutputId);
 
     var pathToChildId = divObjectId++;
-
-    var parentsChildObj = document.createElement("DIV");
-    parentsChildObj.className = "person";
-    parentsChildObj.id = (pathToChildId).toString();
-
+    var parentsChildObj = createDiv("person", pathToChildId);
     parentsChildObj.appendChild(createPersonParagraph(familyJSON));
 
-    var parentsChildPartnerObj = document.createElement("DIV");
-    parentsChildPartnerObj.className = "person";
-    parentsChildPartnerObj.id = (divObjectId++).toString();
-
+    var parentsChildPartnerObj = createDiv("person", divObjectId++);
     parentsChildPartnerObj.appendChild(createPersonParagraph(familyJSON['partner']));
 
     if (pathInputId != null) {
@@ -79,18 +67,12 @@ function parseFamily(familyJSON, pathInputId) {
             familyDOM.appendChild(subFamilyDOM);
         } else {
 
-            var familyChildObj = document.createElement("DIV");
-            familyChildObj.className = "family";
-            familyChildObj.id = (divObjectId++).toString();
+            var familyChildObj = createDiv("family", divObjectId++);
 
-            var singleObj = document.createElement("DIV");
-            singleObj.className = "single";
-            singleObj.id = (divObjectId++).toString();
+            var singleObj = createDiv("single", divObjectId++);
 
             var pathEndingId = divObjectId++;
-            var personObj = document.createElement("DIV");
-            personObj.className = "person";
-            personObj.id = (pathEndingId).toString();
+            var personObj = createDiv("person", pathEndingId);
 
             allPathConnections.push(new PathReference(createPathHtmlElement(), pathOutputId, pathEndingId));
 
@@ -120,6 +102,13 @@ function createPathHtmlElement() {
     document.getElementById("svg1").appendChild(path);
 
     return path.id;
+}
+
+function createDiv(className, id) {
+    var familyChildObj = document.createElement("DIV");
+    familyChildObj.className = className;
+    familyChildObj.id = (id).toString();
+    return familyChildObj;
 }
 
 $(document).ready(function () {
