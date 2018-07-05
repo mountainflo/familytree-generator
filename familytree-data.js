@@ -3,10 +3,12 @@ var jsonTreeData =
     '"family": {' +
     '"name": "Max",' +
     '"surname": "Mustermann",' +
+    '"sex": "m",' +
     '"dateOfBirth": "01.01.1970",' +
     '"partner": {' +
     '"name": "Maria",' +
     '"surname": "Mustermann",' +
+    '"sex": "f",' +
     '"dateOfBirth": "01.01.1970"' +
     '},' +
     '"married": "01.01.1990",' +
@@ -14,20 +16,24 @@ var jsonTreeData =
     '{' +
     '"name": "Peter",' +
     '"surname": "Mustermann",' +
+    '"sex": "m",' +
     '"dateOfBirth": "01.01.1990"' +
     '},' +
     '{' +
     '"name": "Hans",' +
     '"surname": "Mustermann",' +
+    '"sex": "m",' +
     '"dateOfBirth": "01.01.1990"' +
     '},' +
     '{' +
     '"name": "Maximiliane",' +
     '"surname": "Mustermann",' +
+    '"sex": "f",' +
     '"dateOfBirth": "01.01.1990",' +
     '"partner": {' +
     '"name": "Kevin",' +
     '"surname": "Mustermann",' +
+    '"sex": "m",' +
     '"dateOfBirth": "01.01.1990"' +
     '},' +
     '"married": "01.01.2015",' +
@@ -35,6 +41,7 @@ var jsonTreeData =
     '{' +
     '"name": "Kevin",' +
     '"surname": "Mustermann",' +
+    '"sex": "m",' +
     '"dateOfBirth": "01.01.2015"' +
     '}' +
     ']' +
@@ -42,6 +49,7 @@ var jsonTreeData =
     '{' +
     '"name": "Franz",' +
     '"surname": "Mustermann",' +
+    '"sex": "m",' +
     '"dateOfBirth": "01.01.1990"' +
     '}' +
     ']' +
