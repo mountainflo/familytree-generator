@@ -74,17 +74,16 @@ function resetSVGsize(){
 
 
 function connectAll() {
-    // connect all the paths you want!
-    connectElements($("#svg1"), $("#path1"), $("#1"), $("#6"));
-    // connectElements($("#svg1"), $("#path2"), $("#1"),    $("#8"));
-    // connectElements($("#svg1"), $("#path6"), $("#1"),    $("#14"));
-    // connectElements($("#svg1"), $("#path7"), $("#1"),    $("#16"));
-    // connectElements($("#svg1"), $("#path3"), $("#1"),    $("#18"));
-    // connectElements($("#svg1"), $("#path4"), $("#6"),    $("#10"));
-    // connectElements($("#svg1"), $("#path5"), $("#6"),    $("#12"));
-    // connectElements($("#svg1"), $("#path8"), $("#9"),    $("#21"));
-    // connectElements($("#svg1"), $("#path9"), $("#20"),    $("#24"));
-    // connectElements($("#svg1"), $("#path10"), $("#20"),    $("#27"));
+
+    for (var i = 0; i < allPathConnections.length; i++) {
+
+        var pathReference = allPathConnections[i];
+
+        connectElements($("#svg1"), $("#" + pathReference.pathId), $("#" + pathReference.sourceId), $("#" + pathReference.destinationId));
+
+    }
+
+
 }
 
 var i = -15;

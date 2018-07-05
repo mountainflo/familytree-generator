@@ -1,89 +1,127 @@
+var divObjectId = 0;
+var pathObjectId = 0;
+var allPathConnections = [];
+var PathReference = class {
+    constructor(pathId, sourceId, destinationId) {
+        this.pathId = pathId;
+        this.sourceId = sourceId;
+        this.destinationId = destinationId;
+    }
+};
+
 function generateTreeFromJSON() {
 
     var obj = JSON.parse(jsonTreeData);
-    //alert(obj['family'].husband.dateOfBirth);
 
+    if (obj.hasOwnProperty('family')) {
 
-    //TODO go through JSON and create html objects
+        var familyDOM = parseFamily(obj['family'], null);
 
-    parseFamily(obj['family'])
-
-
-}
-
-
-function parseFamily(family) {
-    var husband = family['husband'];
-    var wife = family['wife'];
-    var married = family['married'];
-    var children = family['children'];
-
-    for (var childs in children) {
-
-        if (children[childs].hasOwnProperty('family')) {
-            parseFamily(children[childs]['family'])
+        if (document.getElementById("outer") == null) {
+            alert("no outer div to place html dom");
         } else {
-            children[childs]['name'];
-            children[childs]['surname'];
-            children[childs]['dateOfBirth'];
+            document.getElementById("outer").appendChild(familyDOM);
         }
 
     }
+
+
 }
 
+//TODO give error messages if json is not correct
+function parseFamily(familyJSON, pathInputId) {
 
+    var familyDOM = document.createElement("DIV");
+    familyDOM.className = "family";
+    familyDOM.id = (divObjectId++).toString();
 
+    var pathOutputId = divObjectId++;
 
-function myFunction() {
+    var partnerObj = document.createElement("DIV");
+    partnerObj.className = "partner";
+    partnerObj.id = (pathOutputId).toString();
 
-    var i = 0;
+    var pathToChildId = divObjectId++;
 
-    var family = document.createElement("DIV");
-    family.className = "family";
-    family.id = (i++).toString();
+    var parentsChildObj = document.createElement("DIV");
+    parentsChildObj.className = "person";
+    parentsChildObj.id = (pathToChildId).toString();
 
-    var partner = document.createElement("DIV");
-    partner.className = "partner";
-    partner.id = (i++).toString();
+    parentsChildObj.appendChild(createPersonParagraph(familyJSON));
 
-    var husband = document.createElement("DIV");
-    husband.className = "person";
-    husband.id = (i++).toString();
+    var parentsChildPartnerObj = document.createElement("DIV");
+    parentsChildPartnerObj.className = "person";
+    parentsChildPartnerObj.id = (divObjectId++).toString();
 
-    var wife = document.createElement("DIV");
-    wife.className = "person";
-    wife.id = (i++).toString();
+    parentsChildPartnerObj.appendChild(createPersonParagraph(familyJSON['partner']));
 
-    var family2 = document.createElement("DIV");
-    family2.className = "family";
-    family2.id = (i++).toString();
+    if (pathInputId != null) {
+        allPathConnections.push(new PathReference(createPathHtmlElement(), pathInputId, pathToChildId));
+    }
 
-    var single = document.createElement("DIV");
-    single.className = "single";
-    single.id = (i++).toString();
+    // TODO correct compare of strings with js
+    if (familyJSON['sex'] == "m") {
+        partnerObj.appendChild(parentsChildObj);
+        partnerObj.appendChild(parentsChildPartnerObj);
+    } else {
+        partnerObj.appendChild(parentsChildPartnerObj);
+        partnerObj.appendChild(parentsChildObj);
+    }
 
-    var person = document.createElement("DIV");
-    person.className = "person";
-    person.id = (i++).toString();
+    familyDOM.appendChild(partnerObj);
 
-    family.appendChild(partner);
-    partner.appendChild(husband);
-    partner.appendChild(wife);
-    family.appendChild(family2);
-    family2.appendChild(single);
-    single.appendChild(person);
+    var childrenJSON = familyJSON['children'];
 
+    for (var childJSON in childrenJSON) {
 
-    document.getElementById("outer").appendChild(family);
+        if (childrenJSON[childJSON].hasOwnProperty('married')) {
+            var subFamilyDOM = parseFamily(childrenJSON[childJSON], pathOutputId);
+            familyDOM.appendChild(subFamilyDOM);
+        } else {
 
+            var familyChildObj = document.createElement("DIV");
+            familyChildObj.className = "family";
+            familyChildObj.id = (divObjectId++).toString();
+
+            var singleObj = document.createElement("DIV");
+            singleObj.className = "single";
+            singleObj.id = (divObjectId++).toString();
+
+            var pathEndingId = divObjectId++;
+            var personObj = document.createElement("DIV");
+            personObj.className = "person";
+            personObj.id = (pathEndingId).toString();
+
+            allPathConnections.push(new PathReference(createPathHtmlElement(), pathOutputId, pathEndingId));
+
+            personObj.appendChild(createPersonParagraph(childrenJSON[childJSON]));
+            singleObj.appendChild(personObj);
+            familyChildObj.appendChild(singleObj);
+            familyDOM.appendChild(familyChildObj);
+        }
+
+    }
+
+    return familyDOM;
+
+}
+
+function createPersonParagraph(personJSON) {
+    var description = document.createElement("P");
+    description.className = "personDescription";
+    description.innerText = personJSON['name'] + " " + personJSON['surname'] + " " + personJSON['dateOfBirth'];
+
+    return description;
+}
+
+function createPathHtmlElement() {
     var path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    path.id = "path1";
+    path.id = ("path" + pathObjectId++).toString();
     document.getElementById("svg1").appendChild(path);
 
+    return path.id;
 }
 
-
 $(document).ready(function () {
-    myFunction();
     generateTreeFromJSON();
 });
