@@ -54,6 +54,8 @@ path {
     float:left;
     padding: 0 1em;
 }
+
+/*TODO to this with inheritance and add class husband, wife to html objects */
 /* husband */
 .partner > .person {
     background-color: lightskyblue;
@@ -62,4 +64,9 @@ path {
 .partner > .person + .person {
     background-color: pink;
     margin-left:1em;
+}
+
+.personDescription {
+    margin: 0;
+    font-family: sans-serif;
 }
