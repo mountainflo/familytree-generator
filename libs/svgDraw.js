@@ -68,41 +68,42 @@ function connectElements(svg, path, startElem, endElem) {
     drawPath(svg, path, startX, startY, endX, endY);
 }
 function resetSVGsize(){
-    $("#svg1").attr("height", "0");
-    $("#svg1").attr("width", "0");
+    $("#familyTreePaths").attr("height", "0");
+    $("#familyTreePaths").attr("width", "0");
 }
 
 
-function connectAll() {
-    // connect all the paths you want!
-    connectElements($("#svg1"), $("#path1"), $("#1"), $("#6"));
-    // connectElements($("#svg1"), $("#path2"), $("#1"),    $("#8"));
-    // connectElements($("#svg1"), $("#path6"), $("#1"),    $("#14"));
-    // connectElements($("#svg1"), $("#path7"), $("#1"),    $("#16"));
-    // connectElements($("#svg1"), $("#path3"), $("#1"),    $("#18"));
-    // connectElements($("#svg1"), $("#path4"), $("#6"),    $("#10"));
-    // connectElements($("#svg1"), $("#path5"), $("#6"),    $("#12"));
-    // connectElements($("#svg1"), $("#path8"), $("#9"),    $("#21"));
-    // connectElements($("#svg1"), $("#path9"), $("#20"),    $("#24"));
-    // connectElements($("#svg1"), $("#path10"), $("#20"),    $("#27"));
+function drawAllSvgPaths() {
+
+    resetSVGsize();
+
+    for (var i = 0; i < allPathConnections.length; i++) {
+
+        var pathReference = allPathConnections[i];
+
+        connectElements($("#familyTreePaths"), $("#" + pathReference.pathId), $("#" + pathReference.sourceId), $("#" + pathReference.destinationId));
+
+    }
+
+
 }
 
-var i = -15;
+/*var i = -15;
 function quick_demo(){
     i += 0.2;
-    var outerW  = parseInt($("#outer").css('width'));
-    $("#outer").css({'width': outerW+i});
+    var outerW = parseInt($("#familyTree").css('width'));
+    $("#familyTree").css({'width': outerW + i});
     resetSVGsize();
-    connectAll();
+    drawAllSvgPaths();
 
     if (i<14.7) requestAnimationFrame(quick_demo);
-    else        $("#outer").css({'width': ''});
-}
+    else $("#familyTree").css({'width': ''});
+}*/
 
-$(document).ready(function() {
+/*$(document).ready(function() {
     // reset svg each time
     resetSVGsize();
-    connectAll();
+    drawAllSvgPaths();
     // resize simulation demo, comment it out to make it stop
     //quick_demo();
 
@@ -111,5 +112,5 @@ $(document).ready(function() {
 $(window).resize(function () {
     // reset svg each time
     resetSVGsize();
-    connectAll();
-});
+    drawAllSvgPaths();
+});*/
