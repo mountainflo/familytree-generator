@@ -16,7 +16,8 @@ path {
     stroke: #000;
     stroke-width: 0.2em;
 }
-#outer{
+
+#familyTree {
     margin:0 auto;
     width: 1000%; /* TODO not good. Maybe better way to avoid div wrap.  */
 }

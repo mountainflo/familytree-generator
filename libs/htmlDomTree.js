@@ -1,6 +1,25 @@
+/**
+ * Counter for ids of all html-divs.
+ * @type {number}
+ */
 var divObjectId = 0;
+
+/**
+ * Counter for all path-elements.
+ * @type {number}
+ */
 var pathObjectId = 0;
+
+/**
+ * Array of PathReferences.
+ * @type {Array}
+ */
 var allPathConnections = [];
+
+/**
+ * Path-object contains the id of the source and the destination div and the corresponding path id.
+ * @type {PathReference}
+ */
 var PathReference = class {
     constructor(pathId, sourceId, destinationId) {
         this.pathId = pathId;
@@ -9,6 +28,10 @@ var PathReference = class {
     }
 };
 
+/**
+ * Generate a html family tree with divs from JSON.
+ * Needs a div with the id "familyTree" to place the tree in html.
+ */
 function generateTreeFromJSON() {
 
     var obj = JSON.parse(jsonTreeData);
@@ -17,10 +40,10 @@ function generateTreeFromJSON() {
 
         var familyDOM = parseFamily(obj['family'], null);
 
-        if (document.getElementById("outer") == null) {
-            alert("no outer div to place html dom");
+        if (document.getElementById("familyTree") == null) {
+            alert("no familyTree div to place html dom");
         } else {
-            document.getElementById("outer").appendChild(familyDOM);
+            document.getElementById("familyTree").appendChild(familyDOM);
         }
 
     }
@@ -29,6 +52,13 @@ function generateTreeFromJSON() {
 }
 
 //TODO give error messages if json is not correct
+/**
+ * Recursive creation of a family tree by parsing the JSON-data.
+ *
+ * @param familyJSON data of a family-object
+ * @param pathInputId id of partner-div
+ * @returns {HTMLElement} created sub-family-tree
+ */
 function parseFamily(familyJSON, pathInputId) {
 
     var familyDOM = createDiv("family", divObjectId++);
@@ -99,6 +129,11 @@ function parseFamily(familyJSON, pathInputId) {
 
 }
 
+/**
+ * Creates a html-paragraph with the information about the person contained in the JSON.
+ * @param personJSON JSON with the data about the person (name, surname, dateOfBirth)
+ * @returns {HTMLElement} html-paragraph-element with person data
+ */
 function createPersonParagraph(personJSON) {
     var description = document.createElement("P");
     description.className = "personDescription";
@@ -107,14 +142,24 @@ function createPersonParagraph(personJSON) {
     return description;
 }
 
+/**
+ * Creates a path element within the "familyTreePaths" div.
+ * @returns {string} id of the new created path.
+ */
 function createPathHtmlElement() {
     var path = document.createElementNS("http://www.w3.org/2000/svg", "path");
     path.id = ("path" + pathObjectId++).toString();
-    document.getElementById("svg1").appendChild(path);
+    document.getElementById("familyTreePaths").appendChild(path);
 
     return path.id;
 }
 
+/**
+ * Creates a html-div with id and class-name.
+ * @param className class-name of the div.
+ * @param id id of the div
+ * @returns {HTMLElement} created html-div
+ */
 function createDiv(className, id) {
     var familyChildObj = document.createElement("DIV");
     familyChildObj.className = className;
@@ -123,6 +168,10 @@ function createDiv(className, id) {
     return familyChildObj;
 }
 
+/**
+ * Generates a family tree from json.
+ * Only the divs are created. The svg-paths are not created here.
+ */
 $(document).ready(function () {
     generateTreeFromJSON();
 });
