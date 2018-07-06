@@ -55,15 +55,21 @@ path {
     padding: 0 1em;
 }
 
-/*TODO to this with inheritance and add class husband, wife to html objects */
-/* husband */
+/* left partner */
 .partner > .person {
+}
+
+/* right partner */
+.partner > .person + .person {
+    margin-left:1em;
+}
+
+.person.husband {
     background-color: lightskyblue;
 }
-/* wife */
-.partner > .person + .person {
+
+.person.wife {
     background-color: pink;
-    margin-left:1em;
 }
 
 .personDescription {

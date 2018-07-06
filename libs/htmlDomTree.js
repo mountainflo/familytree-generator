@@ -36,18 +36,24 @@ function parseFamily(familyJSON, pathInputId) {
     var pathOutputId = divObjectId++;
     var partnerObj = createDiv("partner", pathOutputId);
 
-    var pathToChildId = divObjectId++;
-    var parentsChildObj = createDiv("person", pathToChildId);
-    parentsChildObj.appendChild(createPersonParagraph(familyJSON));
+    var parentsChildCssClass;
+    var parentsChildPartnerCssClass;
 
-    var parentsChildPartnerObj = createDiv("person", divObjectId++);
-    parentsChildPartnerObj.appendChild(createPersonParagraph(familyJSON['partner']));
-
-    if (pathInputId != null) {
-        allPathConnections.push(new PathReference(createPathHtmlElement(), pathInputId, pathToChildId));
+    if (familyJSON['sex'] == "m") {
+        parentsChildCssClass = "person husband";
+        parentsChildPartnerCssClass = "person wife";
+    } else {
+        parentsChildCssClass = "person wife";
+        parentsChildPartnerCssClass = "person husband";
     }
 
-    // TODO correct compare of strings with js
+    var pathToChildId = divObjectId++;
+    var parentsChildObj = createDiv(parentsChildCssClass, pathToChildId);
+    parentsChildObj.appendChild(createPersonParagraph(familyJSON));
+
+    var parentsChildPartnerObj = createDiv(parentsChildPartnerCssClass, divObjectId++);
+    parentsChildPartnerObj.appendChild(createPersonParagraph(familyJSON['partner']));
+
     if (familyJSON['sex'] == "m") {
         partnerObj.appendChild(parentsChildObj);
         partnerObj.appendChild(parentsChildPartnerObj);
@@ -57,6 +63,11 @@ function parseFamily(familyJSON, pathInputId) {
     }
 
     familyDOM.appendChild(partnerObj);
+
+    //root element does not need a path
+    if (pathInputId != null) {
+        allPathConnections.push(new PathReference(createPathHtmlElement(), pathInputId, pathToChildId));
+    }
 
     var childrenJSON = familyJSON['children'];
 
@@ -108,6 +119,7 @@ function createDiv(className, id) {
     var familyChildObj = document.createElement("DIV");
     familyChildObj.className = className;
     familyChildObj.id = (id).toString();
+
     return familyChildObj;
 }
 
