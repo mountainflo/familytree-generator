@@ -32,13 +32,11 @@ var PathReference = class {
  * Generate a html family tree with divs from JSON.
  * Needs a div with the id "familyTree" to place the tree in html.
  */
-function generateTreeFromJSON() {
+function generateTreeFromJSON(jsonTreeData) {
 
-    var obj = JSON.parse(jsonTreeData);
+    if (jsonTreeData.hasOwnProperty('family')) {
 
-    if (obj.hasOwnProperty('family')) {
-
-        var familyDOM = parseFamily(obj['family'], null);
+        var familyDOM = parseFamily(jsonTreeData['family'], null);
 
         if (document.getElementById("familyTree") == null) {
             alert("no familyTree div to place html dom");
@@ -173,5 +171,8 @@ function createDiv(className, id) {
  * Only the divs are created. The svg-paths are not created here.
  */
 $(document).ready(function () {
-    generateTreeFromJSON();
+    $.getJSON("familytree-data.json", function (data) {
+        generateTreeFromJSON(data);
+        drawAllSvgPaths();
+    });
 });

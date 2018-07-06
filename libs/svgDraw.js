@@ -73,7 +73,9 @@ function resetSVGsize(){
 }
 
 
-function connectAll() {
+function drawAllSvgPaths() {
+
+    resetSVGsize();
 
     for (var i = 0; i < allPathConnections.length; i++) {
 
@@ -86,22 +88,22 @@ function connectAll() {
 
 }
 
-var i = -15;
+/*var i = -15;
 function quick_demo(){
     i += 0.2;
     var outerW = parseInt($("#familyTree").css('width'));
     $("#familyTree").css({'width': outerW + i});
     resetSVGsize();
-    connectAll();
+    drawAllSvgPaths();
 
     if (i<14.7) requestAnimationFrame(quick_demo);
     else $("#familyTree").css({'width': ''});
-}
+}*/
 
-$(document).ready(function() {
+/*$(document).ready(function() {
     // reset svg each time
     resetSVGsize();
-    connectAll();
+    drawAllSvgPaths();
     // resize simulation demo, comment it out to make it stop
     //quick_demo();
 
@@ -110,5 +112,5 @@ $(document).ready(function() {
 $(window).resize(function () {
     // reset svg each time
     resetSVGsize();
-    connectAll();
-});
+    drawAllSvgPaths();
+});*/
